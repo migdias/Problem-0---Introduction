@@ -3,6 +3,7 @@ Read file into texts and calls.
 It's ok if you don't understand how to read files.
 """
 import csv
+import re
 
 with open('calls.csv', 'r') as f:
     reader = csv.reader(f)
@@ -43,30 +44,31 @@ The percentage should have 2 decimal digits
 
 # Part A
 # O(n) where n is the amount of calls
-numbers_called = set()
+codes = set()
 for from_number, to_number, _, _ in calls:
     if from_number.startswith('(080)'):
         # Fixes lines starting with (0..) OR mobile no parenthesis but space in the middle OR starts with "140"
-        if to_number.startswith('(0') or (' ' in to_number and int(to_number[0]) >= 7) or to_number.startswith('140'):
-            numbers_called.add(to_number)
+        if to_number.startswith('(0'):
+            codes.add(re.search(r'\((.*?)\)', to_number).group(1))
+        elif (' ' in to_number and int(to_number[0]) >= 7):
+            codes.add(to_number[:4])
+        elif to_number.startswith('140'):
+            codes.add('140')
 
 print('The numbers called by people in Bangalore have codes:')
 # O(k) where k is the number of phone numbers found
-for phonenumber in numbers_called:
+for phonenumber in sorted(list(codes)):
     print(phonenumber)
 
-# The overall complexity of Part A is O(n) + O(k) -> O(n) [k is always smaller or equal than n] where n is the amount of calls and k is the amount of phone numbers found. 
+# The overall complexity of Part A is O(n) + O(k) -> O(n) [k is always smaller or equal than n] where n is the amount of calls and k is the amount of phone numbers found.
 
 # Part B
-# we can use the previous answer that have smaller computation time. We know that the previous answer will also have the calls from 080 -> 080.
 
 total_length = len(calls)
 bangalore2bangalore = 0
-for phonenumber in numbers_called:
-    if phonenumber.startswith('(080)'):
+for from_number, to_number, _, _ in calls:
+    if from_number.startswith('(080)') and to_number.startswith('(080)'):
         bangalore2bangalore += 1
+
+
 print(f'{round((bangalore2bangalore/total_length) * 100, 2)} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.')
-
-# The complexity of Part B is O(k) where k is the amount of phone numbers found in Part A.
-
-# The overall complexity is O(n) + O(n) + O(k) + O(k), which simplifies to O(n)

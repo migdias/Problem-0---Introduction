@@ -29,17 +29,25 @@ The list of numbers should be print out one per line in lexicographic order with
 # Eg. calls_set - texts_set will result in all phone numbers that make calls but do not make tests.
 
 # Complexity O(t) where t is the amount of texts
-texts_set = set([x[0] for x in texts])
+
+texts_sent_received_and_calls_received = set()
+for from_number, to_number, _ in texts:
+    texts_sent_received_and_calls_received.add(from_number)
+    texts_sent_received_and_calls_received.add(to_number)
 
 # Complexity O(c) where c is the amount of calls
-calls_set = set([x[0] for x in calls])
+calls_sent_set = set()
+for from_number, to_number, _, _ in calls:
+    texts_sent_received_and_calls_received.add(to_number)
+    calls_sent_set.add(from_number)
+    
 
-# Complexity of O(len(calls_set)), which is smaller than O(c)
-calls_but_no_texts = calls_set - texts_set
+# Complexity of O(len(calls_sent_set))
+telemarketers = calls_sent_set - texts_sent_received_and_calls_received
 
-# Complexity is O(len(calls_set))
+# complexity is sort + print = O(k log k) + O(k) -> O(k log k)
 print('These numbers could be telemarketers: ')
-for pn in calls_but_no_texts:
+for pn in sorted(list(telemarketers)):
     print(pn)
 
-# Overall complexity is O(t) + O(c) + 2O(len(calls_set)) -> O(c)
+
