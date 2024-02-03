@@ -41,16 +41,3 @@ for phone_number, amount_spent_on_phone in phonenumber_dict.items():
         _max_phone = phone_number
 
 print(f'{_max_phone} spent the longest time, {_max} seconds, on the phone during September 2016.')
-
-## Time Analysis
-
-## Reading in the data
-# The necessary time to read the calls is O(m) where , is the number of calls in the file
-
-## Solution
-# 1. We only go through the calls one by one so the time complexity is O(n) where n is the amount of calls in the file. There are some O(1) operations, but everything simplifies to O(n)
-# 2. To get the maximum, we go through  the whole dictionary, which is complexity of O(k) where k is the unique phone numbers within the calls file.
-# Therefore the solution is O(n) + O(k) -> O(n), since k will always be smaller than n.
-
-## Overview
-# The overall time complexity is 2O(m) + O(k) which simplifies to O(m) where n is the number of lines of the calls.
