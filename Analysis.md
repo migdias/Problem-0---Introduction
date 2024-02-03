@@ -32,14 +32,14 @@ The overall time complexity is 2O(m) + O(k) which simplifies to O(m) where n is 
 
 ## Part A
 O(n) where n is the amount of calls
+O(k log k) is the time complexity of the sorting, where k is the number of phones found
 O(k) where k is the number of phone numbers found
 
-The overall complexity of Part A is O(n) + O(k) -> O(n) [k is always smaller or equal than n] where n is the amount of calls and k is the amount of phone numbers found. 
+The overall complexity of Part A is O(n) + O(k log k) + O(k) -> O(n) + O(k log k) [k is always smaller or equal than n] where n is the amount of calls and k is the amount of phone numbers found. 
 
 ## Part B
-We can use the previous answer that have smaller computation time. We know that the previous answer will also have the calls from 080 -> 080.
 
-The complexity of Part B is O(k) where k is the amount of phone numbers found in Part A.
+The complexity of Part B is O(c) where c is the amount of calls.
 
 The overall complexity is O(n) + O(n) + O(k) + O(k), which simplifies to O(n)
 
@@ -47,12 +47,13 @@ The overall complexity is O(n) + O(n) + O(k) + O(k), which simplifies to O(n)
 # Task 4
 
 For this problem we can create two sets. One of phone numbers for calls and on with phone numbers of texts and subtract the sets.
-Eg. calls_set - texts_set will result in all phone numbers that make calls but do not make tests.
+Eg. calls_sent_set - texts_sent_received_and_calls_received will result in all phone numbers that make calls but do not make texts not receive texts or calls.
 
 1. Complexity O(t) where t is the amount of texts
 2. Complexity O(c) where c is the amount of calls
-3. Complexity of O(len(calls_set)), which is smaller than O(c)
-4. Complexity is O(len(calls_set))
-5. Overall complexity is O(t) + O(c) + 2O(len(calls_set)) -> O(c)
+3. Complexity of O(len(telemarketers)), which is smaller than O(c)
+4. Complexity is O(len(telemarketers))
+5. Complexity of sorting is O(n log n)
+5. Overall complexity is O(t) + O(c) + O(k log k) + O(k) -> O(t) + O(c) + O(k log k) where t is the number of texts, c in the number of calls and k is the number of telemarketers. 
 
 PS: Reading the files in is ignored because in this case it will anyway simplify to O(c)
