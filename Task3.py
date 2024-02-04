@@ -64,11 +64,13 @@ for phonenumber in sorted(list(codes)):
 
 # Part B
 
-total_length = len(calls)
+total_calls_from_bangalore = 0
 bangalore2bangalore = 0
 for from_number, to_number, _, _ in calls:
-    if from_number.startswith('(080)') and to_number.startswith('(080)'):
-        bangalore2bangalore += 1
+    if from_number.startswith('(080)'):
+        total_calls_from_bangalore += 1
+        if to_number.startswith('(080)'):
+            bangalore2bangalore += 1
 
 
-print(f'{round((bangalore2bangalore/total_length) * 100, 2)} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.')
+print(f'{round((bangalore2bangalore/total_calls_from_bangalore) * 100, 2)} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.')
